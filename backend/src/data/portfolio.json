@@ -14,5 +14,13 @@
     "quantity": 5,
     "exchange": "NSE",
     "sector": "Technology"
+  },
+   {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "purchasePrice": 7000,
+    "quantity": 5,
+    "exchange": "NASDAQ",
+    "sector": "Technology"
   }
 ]
