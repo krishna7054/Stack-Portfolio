@@ -11,6 +11,9 @@ export interface PortfolioItem {
   latestEarnings: number | null;
   lastUpdated: string | null;
   sector: string;
+  exchange: string | null;
+  latestEarnings: number | null;
+  portfolioPercent: number | null;
   [key: string]: any;
 }
 

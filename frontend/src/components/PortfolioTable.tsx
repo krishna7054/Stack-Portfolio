@@ -63,6 +63,22 @@ const columns: ColumnDef<PortfolioItem>[] = [
     header: 'P/E',
     cell: ({ row }) => row.original.peRatio?.toFixed(2) ?? '-',
   },
+   {
+    accessorKey: 'Exchange',
+    header: 'Exchange',
+    cell: ({ row }) => row.original.exchange?.split(' -')[0].trim() ?? '-',
+  },
+  {
+    accessorKey: 'Portfolio (%)',
+    header: 'Portfolio (%)',
+    cell: ({ row }) => row.original.portfolioPercent ?? '-',
+  },
+ 
+  {
+    accessorKey: 'Latest Earnings',
+    header: 'Latest Earnings',
+    cell: ({ row }) => row.original.latestEarnings?.toFixed(2) ?? '-',
+  },
 ];
 
 export default function PortfolioTable({ stocks }: Props) {

@@ -29,19 +29,31 @@ export const getCMP = async (symbol: string) => {
       $('div#quote-header-info fin-streamer').first().text().trim();
     const price = priceText ? Number(priceText.replace(/,/g, "")) : null;
 
-    // --- PE Ratio (TTM) ---
-    const peText = $('fin-streamer[data-field="trailingPE"]').first().text().trim();
-    const peRatio = peText ? Number(peText.replace(/,/g, "")) : null;
+     // --- Extract metrics by label (PE Ratio, EPS) ---
+    let peRatio: number | null = null;
+    let latestEarnings: number | null = null;
 
-    // --- EPS (TTM) ---
-    const epsText = $('fin-streamer[data-field="epsTrailingTwelveMonths"]').first().text().trim();
-    const latestEarnings = epsText ? Number(epsText.replace(/,/g, "")) : null;
+    $("li.yf-1qull9i").each((_, el) => {
+      const label = $(el).find("span.label").text().trim();
+      const value = $(el).find("fin-streamer").attr("data-value");
+
+      if (label.includes("PE Ratio")) {
+        peRatio = value ? Number(value.replace(/,/g, "")) : null;
+      } else if (label.includes("EPS")) {
+        latestEarnings = value ? Number(value.replace(/,/g, "")) : null;
+      }
+    });
+
+    // --- Exchange (NSE/BSE/NASDAQ etc.) ---
+    const exchangeText = $('span.exchange.yf-15jhhmp').first().text().trim();
+    const exchange = exchangeText || "N/A";
 
     const result = {
       symbol,
       price,
       peRatio,
       latestEarnings,
+      exchange,
       timestamp: new Date().toISOString(),
       source: "yahoo",
     };
@@ -55,6 +67,7 @@ export const getCMP = async (symbol: string) => {
       price: null,
       peRatio: null,
       latestEarnings: null,
+      exchange: null,
       timestamp: new Date().toISOString(),
       source: "yahoo",
       error: (err as any)?.message,
