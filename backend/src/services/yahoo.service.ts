@@ -24,9 +24,7 @@ export const getCMP = async (symbol: string) => {
     const $ = cheerio.load(html);
 
     // --- Current Market Price ---
-    const priceText =
-      $('fin-streamer[data-field="regularMarketPrice"]').first().text().trim() ||
-      $('div#quote-header-info fin-streamer').first().text().trim();
+    const priceText = $('[data-testid="qsp-price"]').first().text().trim()
     const price = priceText ? Number(priceText.replace(/,/g, "")) : null;
 
      // --- Extract metrics by label (PE Ratio, EPS) ---

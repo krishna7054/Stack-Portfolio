@@ -70,26 +70,36 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Portfolio Dashboard</h1>
-          <p className="text-gray-600">
-            {lastUpdate ? `Last updated: ${lastUpdate.toLocaleTimeString()}` : 'Loading...'}
-          </p>
+ <header className="bg-white border-b border-b-amber-200 shadow-sm mb-5 border-t border-t-blue-400">
+      <div className="container mx-auto px-4 py-6 max-w-7xl">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-serif text-gray-900">Portfolio <span className='text-blue-500 font-serif'>Dashboard</span></h1>
+            <p className="text-gray-600 mt-1 font-light">Real-time stock portfolio tracking</p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-600">Last updated</p>
+            <p className="text-lg font-semibold text-gray-900">
+             {lastUpdate ? `${lastUpdate.toLocaleTimeString()}` : 'Loading...'}
+            </p>
+          </div>
         </div>
+      </div>
+    </header>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 ">
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm border-t border-t-cyan-400 ">
             <h3 className="text-sm font-medium text-gray-500">Total Invested</h3>
             <p className="text-2xl font-bold mt-1">₹{totalInvested.toLocaleString('en-IN')}</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm border-t border-t-zinc-400 ">
             <h3 className="text-sm font-medium text-gray-500">Current Value</h3>
             <p className="text-2xl font-bold mt-1">₹{totalValue.toLocaleString('en-IN')}</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className={`bg-white p-6 rounded-lg border border-gray-200 shadow-sm ${totalGain >= 0 ? 'border-t border-t-green-400 ' : 'border-t border-t-red-400 '}`}>
             <h3 className="text-sm font-medium text-gray-500">Total Gain/Loss</h3>
-            <p className={`text-2xl font-bold mt-1 ${totalGain >= 0 ? 'text-gain' : 'text-loss'}`}>
+            <p className={`text-2xl font-bold mt-1 ${totalGain >= 0 ? 'text-gain ' : 'text-loss'}`}>
               ₹{Math.abs(totalGain).toLocaleString('en-IN')} ({((totalGain / totalInvested) * 100).toFixed(2)}%)
             </p>
           </div>

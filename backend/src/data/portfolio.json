@@ -2,7 +2,7 @@
   {
     "symbol": "RELIANCE.NS",
     "name": "Reliance Industries Ltd",
-    "purchasePrice": 2500,
+    "purchasePrice": 1400,
     "quantity": 10,
     "exchange": "NSE",
     "sector": "Energy"
@@ -10,7 +10,7 @@
   {
     "symbol": "TCS.NS",
     "name": "Tata Consultancy Services Ltd",
-    "purchasePrice": 3200,
+    "purchasePrice": 2200,
     "quantity": 5,
     "exchange": "NSE",
     "sector": "Technology"
@@ -18,8 +18,40 @@
    {
     "symbol": "AAPL",
     "name": "Apple Inc.",
-    "purchasePrice": 7000,
+    "purchasePrice": 269,
     "quantity": 5,
+    "exchange": "NASDAQ",
+    "sector": "Technology"
+  },
+  {
+    "symbol": "BAJFINANCE.NS",
+    "name": "Bajaj Finance Limited",
+    "purchasePrice": 1200,
+    "quantity": 15,
+    "exchange": "NSE",
+    "sector": "Financial"
+  },
+  {
+    "symbol": "HDB",
+    "name": "HDFC Bank Limited",
+    "purchasePrice": 10,
+    "quantity": 8,
+    "exchange": "NASDAQ",
+    "sector": "Financial"
+  },
+  {
+    "symbol": "BE",
+    "name": "Bloom Energy Corporation",
+    "purchasePrice": 130,
+    "quantity": 20,
+    "exchange": "NASDAQ",
+    "sector": "Energy"
+  },
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "purchasePrice": 250,
+    "quantity": 2,
     "exchange": "NASDAQ",
     "sector": "Technology"
   }
