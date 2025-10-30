@@ -1,7 +1,12 @@
 'use client';
-
+import React from 'react';
 import { PortfolioItem } from '@/types/portfolio';
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 
 interface Props {
   stocks: PortfolioItem[];
@@ -13,8 +18,8 @@ const columns: ColumnDef<PortfolioItem>[] = [
     header: 'Stock',
     cell: ({ row }) => (
       <div>
-        <div className="font-medium">{row.original.particulars}</div>
-        <div className="text-xs text-gray-500">{row.original.symbol}</div>
+        <div className="font-medium text-sm sm:text-base">{row.original.particulars}</div>
+        <div className="text-[10px] sm:text-xs text-gray-500">{row.original.symbol}</div>
       </div>
     ),
   },
@@ -35,12 +40,20 @@ const columns: ColumnDef<PortfolioItem>[] = [
   {
     accessorKey: 'cmp',
     header: 'CMP',
-    cell: ({ row }) => row.original.cmp ? <span className="font-medium">₹{row.original.cmp.toFixed(2)}</span> : '-',
+    cell: ({ row }) =>
+      row.original.cmp ? (
+        <span className="font-medium">₹{row.original.cmp.toFixed(2)}</span>
+      ) : (
+        '-'
+      ),
   },
   {
     accessorKey: 'presentValue',
     header: 'Value',
-    cell: ({ row }) => row.original.presentValue ? `₹${row.original.presentValue.toLocaleString('en-IN')}` : '-',
+    cell: ({ row }) =>
+      row.original.presentValue
+        ? `₹${row.original.presentValue.toLocaleString('en-IN')}`
+        : '-',
   },
   {
     accessorKey: 'gainLoss',
@@ -49,9 +62,11 @@ const columns: ColumnDef<PortfolioItem>[] = [
       const gain = row.original.gainLoss;
       if (gain === null) return '-';
       return (
-        <div className={gain >= 0 ? 'text-gain' : 'text-loss'}>
-          <div className="font-medium">₹{Math.abs(gain).toLocaleString('en-IN')}</div>
-          <div className="text-xs">
+        <div className={gain >= 0 ? 'text-green-600' : 'text-red-600'}>
+          <div className="font-medium text-sm sm:text-base">
+            ₹{Math.abs(gain).toLocaleString('en-IN')}
+          </div>
+          <div className="text-[10px] sm:text-xs">
             ({((gain / row.original.investment) * 100).toFixed(2)}%)
           </div>
         </div>
@@ -63,7 +78,7 @@ const columns: ColumnDef<PortfolioItem>[] = [
     header: 'P/E',
     cell: ({ row }) => row.original.peRatio?.toFixed(2) ?? '-',
   },
-   {
+  {
     accessorKey: 'Exchange',
     header: 'Exchange',
     cell: ({ row }) => row.original.exchange?.split(' -')[0].trim() ?? '-',
@@ -73,7 +88,6 @@ const columns: ColumnDef<PortfolioItem>[] = [
     header: 'Portfolio (%)',
     cell: ({ row }) => row.original.portfolioPercent ?? '-',
   },
- 
   {
     accessorKey: 'Latest Earnings',
     header: 'Latest Earnings',
@@ -81,7 +95,7 @@ const columns: ColumnDef<PortfolioItem>[] = [
   },
 ];
 
-export default function PortfolioTable({ stocks }: Props) {
+function PortfolioTable({ stocks }: Props) {
   const table = useReactTable({
     data: stocks,
     columns,
@@ -89,31 +103,50 @@ export default function PortfolioTable({ stocks }: Props) {
   });
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id} className="border-b bg-gray-50">
-              {headerGroup.headers.map(header => (
-                <th key={header.id} className="text-left py-3 px-4 font-medium text-gray-700">
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id} className="border-b hover:bg-gray-50 transition">
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id} className="py-3 px-4">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="w-full overflow-x-auto">
+      <div className="min-w-[800px] sm:min-w-full">
+        <table className="w-full border-collapse text-xs sm:text-sm md:text-base">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr
+                key={headerGroup.id}
+                className="border-b bg-gray-100 text-gray-700"
+              >
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="text-left py-2 px-2 sm:py-3 sm:px-4 font-semibold whitespace-nowrap"
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr
+                key={row.id}
+                className="border-b hover:bg-gray-50 transition-colors"
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className="py-2 px-2 sm:py-3 sm:px-4 text-gray-800 whitespace-nowrap"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
+
+export default React.memo(PortfolioTable);

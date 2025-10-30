@@ -6,7 +6,7 @@ import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" })); // Allow all origins for simplicity
 app.use(express.json());
 app.use(rateLimiter); // basic rate limiting for incoming requests
 
